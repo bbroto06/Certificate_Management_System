@@ -1,0 +1,85 @@
+/* Create table certificate_details */
+
+create table certificate_details
+(
+roll_number number(10) primary key,
+certificate_number number(10) not null,
+student_name varchar(20) not null,
+grade varchar(20) not null,
+stream varchar(20) not null,
+date_of_receive date not null,
+date_of_issue date
+);
+
+********************************************************************************
+
+/* Add check constraint date_of_issue > date_of_receive */
+
+alter table certificate_details
+add constraints chk_issue_date
+check (date_of_issue > date_of_receive);
+
+********************************************************************************
+
+/* Add check constraint stream */
+
+alter table certificate_details
+add constraints chk_stream
+check (stream in ('CSE', 'IT', 'ECE', 'EE', 'FT', 'ME')); 
+
+********************************************************************************
+
+/* Add check constraint grade */
+
+alter table certificate_details
+add constraints chk_grade
+check (grade in ('O', 'E', 'A', 'B', 'C', 'D', 'F'));
+
+********************************************************************************
+
+/* Insert data in table certificate_details */
+
+insert into certificate_details values(11, 101, 'Amit Roy', 'A', 'CSE', '01-jan-06', '01-may-06');
+insert into certificate_details values(12, 102, 'Sumit Roy', 'B', 'CSE', '01-feb-07', '01-mar-08');
+insert into certificate_details values(13, 103, 'Avik Mondal', 'A', 'IT', '01-mar-08', '01-jun-08');
+insert into certificate_details values(14, 104, 'Suman Biswas', 'A', 'EE', '01-may-09', '01-jun-09');
+
+insert into certificate_details values(15, 105, 'Abhijit Banik', 'B', 'FT', '01-jan-11', '');
+insert into certificate_details values(17, 107, 'Rohit Khaitan', 'A', 'ME', '01-mar-11', '');
+insert into certificate_details values(18, 108, 'Rahul Sen', 'B', 'ME', '01-jan-11', '');
+insert into certificate_details values(19, 109, 'Ravi Kedia', 'A', 'EE', '01-feb-11', '');
+insert into certificate_details values(20, 110, 'Souvik Mitra', 'A', 'EE', '01-jun-11', '');
+
+insert into certificate_details values(21, 111, 'Madhav Biswas', 'A', 'EE', to_date('2009-01-09', 'yyyy-MM-dd'), to_date('2009-02-09', 'yyyy-MM-dd'));
+
+
+********************************************************************************
+
+/* Drop table */
+
+drop table certificate_details;
+
+********************************************************************************
+
+/* View table structure */
+
+desc certificate_details;
+
+********************************************************************************
+
+/* View all data in the table */
+
+select * from certificate_details;
+
+********************************************************************************
+
+/* Monthly view of issued certificates of a specified month */
+
+select * from certificate_details where to_char(date_of_issue, 'mon')='mar';
+
+select * from certificate_details where to_char(date_of_issue, 'mm')='01';
+
+select * from certificate_details where to_char(date_of_issue, 'mm')='03'and to_char(date_of_issue, 'yy')='11';
+
+********************************************************************************
+
